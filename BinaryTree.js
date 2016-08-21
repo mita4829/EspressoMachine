@@ -1,13 +1,16 @@
 //Binary Tree data structure in Javascript
+//v 1.0.2
 
-function Node(key,value,left,right){
+function BinaryTreeNode(key,value,left,right){
+    //Define more variables here that each node will have
     this.key = key;
     this.value = value;
     this.left = left;
     this.right = right;
 }
 
-Node.prototype.appendNode = function(head,x){
+//Append node x to tree head
+BinaryTreeNode.prototype.appendBinaryTreeNode = function(head,x){
     if(head == null){
         head = x;
         return;
@@ -18,7 +21,7 @@ Node.prototype.appendNode = function(head,x){
             head.right = x;
             return;
         }
-        head.appendNode(head.right,x);
+        head.appendBinaryTreeNode(head.right,x);
         return;
         
     }else if(x.key < head.key){
@@ -26,12 +29,13 @@ Node.prototype.appendNode = function(head,x){
             head.left = x;
             return;
         }
-        head.appendNode(head.left,x);
+        head.appendBinaryTreeNode(head.left,x);
         return;
     }
 };
 
-Node.prototype.removeNode = function(head,x){
+//Remove node x from tree head
+BinaryTreeNode.prototype.removeBinaryTreeNode = function(head,x){
     if(head == null){
         return;
     }
@@ -54,20 +58,21 @@ Node.prototype.removeNode = function(head,x){
             var save = head.findReplacement(head.left);
             head.value = save.value;
             head.key = save.key;
-            head.left = head.removeNode(head.left,head);
+            head.left = head.removeBinaryTreeNode(head.left,head);
             return head;
         }
     }
     else if(head.key < x.key){
-        head.right = head.removeNode(head.right,x);
+        head.right = head.removeBinaryTreeNode(head.right,x);
     }else if(head.key > x.key){
-        head.left = head.removeNode(head.left,x);
+        head.left = head.removeBinaryTreeNode(head.left,x);
     }
     
     return head;
 }
 
-Node.prototype.findReplacement = function(x){
+//Helper function for removing nodes
+BinaryTreeNode.prototype.findReplacement = function(x){
     var temp = x;
     while(temp.right != null){
         temp = temp.right;
@@ -75,7 +80,8 @@ Node.prototype.findReplacement = function(x){
     return temp;
 }
 
-Node.prototype.printTree = function(head){
+//Print tree
+BinaryTreeNode.prototype.printTree = function(head){
     if(head == null){
         return;
     }
@@ -84,16 +90,32 @@ Node.prototype.printTree = function(head){
     head.printTree(head.right);
 }
 
+//Count nodes in tree
+BinaryTreeNode.prototype.count = function(head){
+    if(head == null){
+        return 0;
+    }
+    return head.count(head.left) + head.count(head.right) + 1;
+}
+
 function main(){
-    // define a new head node
-    // var head = new Node(0,"some info",null,null);
+    // define a new head BinaryTreeNode
+    // var head = new BinaryTreeNode(0,"some info",null,null);
     
-    //append node to head
-    // var smartyHead = new Node(1,"some info",null,null);
-    // head.appendNode(head,smartyHead);
+    // append BinaryTreeNode to head
+    // var smartyHead = new BinaryTreeNode(1,"some info",null,null);
     
-    //remove node
-    // head.removeNode(head,smartyHead);
+    // head.appendBinaryTreeNode(head,smartyHead);
+    
+    
+    // remove BinaryTreeNode
+    // head.removeBinaryTreeNode(head,smartyHead);
+    
+    // clean up
+    // delete smartyHead;
+    // delete head;
+    // smartyHead = null;
+    // head = null;
 }
 
 
